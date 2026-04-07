@@ -1,0 +1,204 @@
+{
+  "strategies": [
+    {
+      "id": "XAU_TREND_SCALP_v1",
+      "name": "XAUUSDm Trend Continuation",
+      "asset": "XAUUSDm",
+      "timeframe": "1m with 5m confirmation",
+      "parameters": {
+        "stopLoss": 3,
+        "takeProfit": 6,
+        "spread": 2,
+        "maxBars": 25,
+        "sessionFilter": ["london", "ny"]
+      },
+      "entryLong": [
+        "EMA 5 > EMA 13 > EMA 20",
+        "Price above EMA 20",
+        "MACD histogram crosses above zero",
+        "RSI between 50-65",
+        "Price above VWAP"
+      ],
+      "entryShort": "Inverse of long conditions",
+      "filters": [
+        "EMA alignment confirmed on 5m TF",
+        "ATR(14) > 20-day ATR average",
+        "London or NY session only",
+        "No major news in next 30 min",
+        "Max 2 consecutive losses"
+      ],
+      "tradeManagement": {
+        "phase1": "Monitor for adverse moves",
+        "phase2": "Move SL to BE + 0.5 at 1R, exit 50% at 1.5R",
+        "phase3": "Trail using last 5-bar low - 1.5 USD"
+      },
+      "risk": {
+        "perTrade": "1%",
+        "dailyMax": "3%",
+        "maxTradesPerSession": 5
+      }
+    },
+    {
+      "id": "BTC_MOMENTUM_SCALP_v1",
+      "name": "BTCUSDm Momentum Scalp",
+      "asset": "BTCUSDm",
+      "timeframe": "1m with 3m confirmation",
+      "parameters": {
+        "stopLoss": 2.5,
+        "takeProfit": [2.5, 5, 7.5],
+        "spread": 3,
+        "maxBars": 20,
+        "sessionFilter": ["london", "ny"]
+      },
+      "entryLong": [
+        "MACD histogram > 0 and increasing",
+        "EMA 5 crossed above EMA 13",
+        "RSI 40-60",
+        "Volume > 1.5x 20-bar MA",
+        "3 consecutive higher closes"
+      ],
+      "filters": [
+        "EMA 20 sloping in trade direction",
+        "ATR > 15",
+        "London/NY only",
+        "Spread < 5 USD"
+      ],
+      "tradeManagement": {
+        "tp1": "Close 50% at 1:1, move SL to BE",
+        "tp2": "Close 30% at 2:1",
+        "tp3": "Trail remaining 20% with 2 USD stop"
+      },
+      "risk": {
+        "perTrade": "1%",
+        "dailyMax": "4%",
+        "maxTradesPerSession": 3
+      }
+    },
+    {
+      "id": "XAU_REVERSAL_HUNT_v1",
+      "name": "XAUUSDm Reversal Hunt",
+      "asset": "XAUUSDm",
+      "timeframe": "1m",
+      "parameters": {
+        "stopLoss": 2,
+        "takeProfit": [2, 3, 4],
+        "spread": 2,
+        "maxBars": 15,
+        "sessionFilter": ["london", "ny"]
+      },
+      "entryLong": [
+        "RSI(14) <= 35",
+        "RSI turning up",
+        "Price bounced from near daily low",
+        "EMA 20 as resistance overhead",
+        "MACD histogram turning positive"
+      ],
+      "filters": [
+        "Within lower 30% of daily range",
+        "Within 2 hours of session open",
+        "Recent 5-min candles small",
+        "No strong trend",
+        "Min 20 pips from round numbers"
+      ],
+      "tradeManagement": {
+        "primary": "Quick exit philosophy",
+        "rule1": "Exit at BE if not at TP1 in 5 bars",
+        "rule2": "Exit if RSI reaches 50 without TP1",
+        "rule3": "Trail once at TP1"
+      },
+      "risk": {
+        "perTrade": "0.5%",
+        "dailyMax": "1.5%",
+        "maxTradesPerDay": 2
+      }
+    },
+    {
+      "id": "XAU_BREAKOUT_SCALP_v1",
+      "name": "XAUUSDm Volatility Breakout",
+      "asset": "XAUUSDm",
+      "timeframe": "1m",
+      "parameters": {
+        "stopLoss": 2.5,
+        "takeProfit": [3, 5],
+        "spread": 2,
+        "maxBars": 10,
+        "sessionFilter": ["ny"]
+      },
+      "entryLong": [
+        "ATR(14) < 50% of 20-day ATR",
+        "5 bars with <2 USD range",
+        "BB squeeze",
+        "Close above highest high of compression",
+        "Volume > 2x average on breakout"
+      ],
+      "filters": [
+        "Within NY first 2 hours",
+        "ATR expanding",
+        "No news in next 15 min",
+        "False breakout filter: close > high + 1 USD"
+      ],
+      "tradeManagement": {
+        "primary": "Fast reaction - volatile moves",
+        "rule1": "Exit if pullback to entry",
+        "rule2": "Trail using last breakout candle low",
+        "rule3": "Exit if no extension in 3 bars"
+      },
+      "risk": {
+        "perTrade": "1%",
+        "dailyMax": "2%",
+        "maxBreakoutsPerDay": 3
+      }
+    },
+    {
+      "id": "BTC_MEAN_REVERT_v1",
+      "name": "BTCUSDm Mean Reversion",
+      "asset": "BTCUSDm",
+      "timeframe": "1m with 5m confirmation",
+      "parameters": {
+        "stopLoss": 3,
+        "takeProfit": 4,
+        "spread": 3,
+        "maxBars": 20,
+        "sessionFilter": ["ny"]
+      },
+      "entryLong": [
+        "Price > 2 SD below 20-bar SMA",
+        "RSI(14) < 30",
+        "RSI(4) showing bullish divergence",
+        "Previous candle rejected from low",
+        "VWAP below price"
+      ],
+      "filters": [
+        "Trade in direction of 4-hour trend",
+        "NY session only",
+        "Volume average or above",
+        "Within 70% of daily ATR",
+        "ADX < 25 preferred"
+      ],
+      "tradeManagement": {
+        "primary": "Quick mean reversion",
+        "target": "Back to 20-bar SMA",
+        "rule1": "Exit 50% at 50% of target, move SL to BE",
+        "rule2": "Exit remaining if reaching SMA slowly"
+      },
+      "risk": {
+        "perTrade": "0.75%",
+        "dailyMax": "2%",
+        "maxTradesPerDay": 2
+      }
+    }
+  ],
+  "commonRiskRules": {
+    "positionSizing": "Fixed fractional: Risk 1-2% per trade",
+    "dailyLossLimit": "3-5% of account",
+    "sessionLimit": "Max 5-7 trades per session",
+    "drawdownWarning": "5% from peak",
+    "drawdownHalt": "10% from peak",
+    "correlationRule": "Only one direction on correlated pairs"
+  },
+  "sessionDefinitions": {
+    "asia": "00:00-07:00 UTC",
+    "london": "07:00-12:00 UTC",
+    "ny": "12:00-17:00 UTC"
+  }
+}
